@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
 import { PlusIcon, MinusIcon } from './icons/index';
 import { GoogleGenAI } from "@google/genai";
 import { usStates } from '../data/states';
-
-interface CustodyPageProps {
-  setCurrentPage: (page: Page) => void;
-  viewPost: (postId: string) => void;
-}
+import { pageToPath } from '../App';
 
 const CustodyTypeCard: React.FC<{ title: string; children: React.ReactNode }> = ({ title, children }) => (
     <div className="bg-white p-6 rounded-xl shadow-lg border-t-4 border-primary-blue h-full">
@@ -68,7 +65,8 @@ const formatResponseToHtml = (text: string) => {
 };
 
 
-const CustodyPage: React.FC<CustodyPageProps> = ({ setCurrentPage }) => {
+const CustodyPage: React.FC = () => {
+  const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   
   // State for local resources finder

@@ -1,13 +1,10 @@
 
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
 import { ChevronRightIcon } from './icons/index';
 import { blogPosts, BlogPost } from '../data/blogPosts';
-
-interface HomePageProps {
-  setCurrentPage: (page: Page) => void;
-  viewPost: (postId: string) => void;
-}
+import { pageToPath } from '../App';
 
 const FeatureCard: React.FC<{ title: string; description: string; imageUrl: string }> = ({ title, description, imageUrl }) => (
     <div className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 h-full border border-gray-200/50">
@@ -34,9 +31,14 @@ const HomeBlogCard: React.FC<{ post: BlogPost; onReadMore: () => void }> = ({ po
 );
 
 
-const HomePage: React.FC<HomePageProps> = ({ setCurrentPage, viewPost }) => {
+const HomePage: React.FC = () => {
+  const navigate = useNavigate();
   const featuredPost = blogPosts[0];
   const otherPosts = blogPosts.slice(1, 4);
+
+  const viewPost = (postId: string) => {
+    navigate(`/blog/${postId}`);
+  };
 
   return (
     <div>
@@ -49,7 +51,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage, viewPost }) => {
             PaternityMatters.org is a dedicated resource for fathers striving to establish their parental rights and build stronger connections with their children.
           </p>
            <button
-              onClick={() => setCurrentPage(Page.Paternity)}
+              onClick={() => navigate(pageToPath(Page.Paternity))}
               className="bg-primary-orange text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_theme(colors.primary-orange/50%)]"
             >
               Start Here
@@ -118,7 +120,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage, viewPost }) => {
           
           <div className="text-center mt-16">
             <button
-              onClick={() => setCurrentPage(Page.Blog)}
+              onClick={() => navigate(pageToPath(Page.Blog))}
               className="bg-primary-orange text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_theme(colors.primary-orange/50%)]"
             >
               View All Posts
@@ -134,7 +136,7 @@ const HomePage: React.FC<HomePageProps> = ({ setCurrentPage, viewPost }) => {
             <div className="md:w-1/2">
               <h2 className="text-3xl md:text-4xl font-bold text-dark-blue font-serif mb-4">The Importance of a Father's Presence</h2>
               <p className="text-gray-600 mb-6">Research consistently shows that children with involved, loving fathers are more likely to thrive. They achieve higher levels of academic success, have fewer behavioral problems, and report greater overall happiness. Your fight for your rights is a fight for their future.</p>
-              <button onClick={() => setCurrentPage(Page.About)} className="text-primary-blue font-semibold hover:text-primary-orange group flex items-center">
+              <button onClick={() => navigate(pageToPath(Page.About))} className="text-primary-blue font-semibold hover:text-primary-orange group flex items-center">
                 <span>Learn Why This Matters</span>
                 <ChevronRightIcon className="w-5 h-5 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
               </button>

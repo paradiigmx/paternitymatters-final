@@ -1,11 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
 import { ExternalLinkIcon } from './icons';
-
-interface PaternityFraudPageProps {
-  setCurrentPage: (page: Page) => void;
-  viewPost: (postId: string) => void;
-}
+import { pageToPath } from '../App';
 
 const FraudStatCard: React.FC<{ title: string; description: string; imageUrl: string }> = ({ title, description, imageUrl }) => (
     <div className="bg-white rounded-2xl shadow-xl overflow-hidden text-center h-full flex flex-col">
@@ -48,7 +45,9 @@ const ResourceLink: React.FC<{ href: string; title: string; description: string;
 );
 
 
-const PaternityFraudPage: React.FC<PaternityFraudPageProps> = ({ setCurrentPage, viewPost }) => {
+const PaternityFraudPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-light-bg">
        {/* Hero Section */}
@@ -101,7 +100,7 @@ const PaternityFraudPage: React.FC<PaternityFraudPageProps> = ({ setCurrentPage,
                         title="Seek Legal Counsel Immediately"
                     >
                         <p>
-                          Do not confront anyone or stop paying court-ordered support without legal advice. An attorney specializing in family law can explain your state's specific laws, statutes of limitation, and your legal options. See our <button onClick={() => setCurrentPage(Page.Resources)} className="font-semibold text-primary-blue hover:underline">Resources page</button> for help.
+                          Do not confront anyone or stop paying court-ordered support without legal advice. An attorney specializing in family law can explain your state's specific laws, statutes of limitation, and your legal options. See our <button onClick={() => navigate(pageToPath(Page.Resources))} className="font-semibold text-primary-blue hover:underline">Resources page</button> for help.
                         </p>
                     </StepCard>
                     <StepCard
@@ -110,7 +109,7 @@ const PaternityFraudPage: React.FC<PaternityFraudPageProps> = ({ setCurrentPage,
                         image="/images/mjh-shikder--bJj_81Zois-unsplash.jpg"
                     >
                       <p>
-                        An at-home paternity test is not admissible in court. You must obtain a legally-admissible test from an AABB-accredited laboratory. <button onClick={() => setCurrentPage(Page.PaternityTesting)} className="font-semibold text-primary-blue hover:underline">Learn more about the legal testing process</button>.
+                        An at-home paternity test is not admissible in court. You must obtain a legally-admissible test from an AABB-accredited laboratory. <button onClick={() => navigate(pageToPath(Page.PaternityTesting))} className="font-semibold text-primary-blue hover:underline">Learn more about the legal testing process</button>.
                       </p>
                     </StepCard>
                      <StepCard
@@ -149,7 +148,7 @@ const PaternityFraudPage: React.FC<PaternityFraudPageProps> = ({ setCurrentPage,
             </div>
              <div className="mt-20 text-center">
                 <button
-                    onClick={() => setCurrentPage(Page.Paternity)}
+                    onClick={() => navigate(pageToPath(Page.Paternity))}
                     className="font-semibold text-dark-blue hover:text-primary-orange transition-colors duration-300"
                 >
                     &larr; Back to Paternity Overview
