@@ -1,5 +1,6 @@
 
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { blogPosts, BlogPost } from '../data/blogPosts';
 import { SearchIcon } from './icons';
 
@@ -31,11 +32,8 @@ const BlogPostCard: React.FC<BlogPostCardProps> = ({ post, onReadMore }) => {
   );
 };
 
-interface BlogPageProps {
-  viewPost: (postId: string) => void;
-}
-
-const BlogPage: React.FC<BlogPageProps> = ({ viewPost }) => {
+const BlogPage: React.FC = () => {
+  const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [sortOrder, setSortOrder] = useState<'newest' | 'oldest'>('newest');
@@ -59,6 +57,10 @@ const BlogPage: React.FC<BlogPageProps> = ({ viewPost }) => {
 
     return posts;
   }, [searchTerm, selectedCategory, sortOrder]);
+
+  const viewPost = (postId: string) => {
+    navigate(`/blog/${postId}`);
+  };
 
   return (
     <div className="py-16 md:py-24 bg-light-bg">

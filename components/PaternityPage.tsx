@@ -1,16 +1,13 @@
 
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ExternalLinkIcon, PlusIcon, MinusIcon, ChevronRightIcon } from './icons/index';
 import { Page } from '../types';
 import { GoogleGenAI } from "@google/genai";
 import PaternityTimeline from './PaternityTimeline';
 import DueDateCalculator from './DueDateCalculator';
-
-interface PaternityPageProps {
-  setCurrentPage: (page: Page) => void;
-  viewPost: (postId: string) => void;
-}
+import { pageToPath } from '../App';
 
 const SubPageCard: React.FC<{ title: Page, description: string, onClick: () => void, icon: React.ReactNode }> = ({ title, description, onClick, icon }) => (
     <div onClick={onClick} className="bg-white rounded-2xl shadow-lg overflow-hidden transform hover:-translate-y-2 hover:shadow-2xl transition-all duration-300 h-full border border-gray-200/50 cursor-pointer flex flex-col">
@@ -28,7 +25,8 @@ const SubPageCard: React.FC<{ title: Page, description: string, onClick: () => v
 );
 
 
-const PaternityPage: React.FC<PaternityPageProps> = ({ setCurrentPage, viewPost }) => {
+const PaternityPage: React.FC = () => {
+  const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [location, setLocation] = useState('');
   const [isLocating, setIsLocating] = useState(false);
@@ -219,19 +217,19 @@ const PaternityPage: React.FC<PaternityPageProps> = ({ setCurrentPage, viewPost 
                 <SubPageCard 
                   title={Page.PaternityTesting} 
                   description="Understand the difference between at-home and legal DNA tests and why getting the right one is crucial."
-                  onClick={() => setCurrentPage(Page.PaternityTesting)}
+                  onClick={() => navigate(pageToPath(Page.PaternityTesting))}
                   icon={<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>}
                 />
                 <SubPageCard 
                   title={Page.PaternityFraud} 
                   description="Learn the signs of paternity fraud, its devastating impact, and the legal steps you can take if you are a victim."
-                  onClick={() => setCurrentPage(Page.PaternityFraud)}
+                  onClick={() => navigate(pageToPath(Page.PaternityFraud))}
                   icon={<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>}
                 />
                 <SubPageCard 
                   title={Page.LegalDocuments} 
                   description="Get a checklist of the essential documents you need to gather to build a strong, evidence-based legal case."
-                  onClick={() => setCurrentPage(Page.LegalDocuments)}
+                  onClick={() => navigate(pageToPath(Page.LegalDocuments))}
                   icon={<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>}
                 />
              </div>
@@ -252,7 +250,7 @@ const PaternityPage: React.FC<PaternityPageProps> = ({ setCurrentPage, viewPost 
               <p className="text-lg text-gray-700 text-center mb-12">
                 Navigating a paternity case can feel overwhelming. This interactive timeline breaks down the typical legal process into key stages, so you know what to expect on your journey.
               </p>
-              <PaternityTimeline viewPost={viewPost} setCurrentPage={setCurrentPage} />
+              <PaternityTimeline />
             </div>
           </section>
           
@@ -264,7 +262,7 @@ const PaternityPage: React.FC<PaternityPageProps> = ({ setCurrentPage, viewPost 
                       Understanding potential financial obligations is a key part of paternity. Use our detailed, state-specific calculator to get an estimate based on income and parenting time.
                   </p>
                   <button
-                      onClick={() => setCurrentPage(Page.ChildSupport)}
+                      onClick={() => navigate(pageToPath(Page.ChildSupport))}
                       className="bg-primary-orange text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_theme(colors.primary-orange/50%)]"
                   >
                       Go to Child Support Calculator
@@ -282,7 +280,7 @@ const PaternityPage: React.FC<PaternityPageProps> = ({ setCurrentPage, viewPost 
               </p>
               <div className="grid md:grid-cols-2 gap-8">
                 <div 
-                  onClick={() => setCurrentPage(Page.NewDads)} 
+                  onClick={() => navigate(pageToPath(Page.NewDads))}
                   className="bg-light-bg p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer text-left"
                 >
                   <h3 className="text-2xl font-bold text-dark-blue font-serif mb-3">Guide for New Dads</h3>
@@ -292,7 +290,7 @@ const PaternityPage: React.FC<PaternityPageProps> = ({ setCurrentPage, viewPost 
                   </span>
                 </div>
                 <div 
-                  onClick={() => setCurrentPage(Page.Blog)} 
+                  onClick={() => navigate(pageToPath(Page.Blog))}
                   className="bg-light-bg p-8 rounded-xl shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 cursor-pointer text-left"
                 >
                   <h3 className="text-2xl font-bold text-dark-blue font-serif mb-3">Fatherhood Blog</h3>

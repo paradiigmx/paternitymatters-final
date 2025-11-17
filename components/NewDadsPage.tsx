@@ -1,11 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
 import { PlusIcon, MinusIcon } from './icons';
 import AffiliateProductCTA from './AffiliateProductCTA';
-
-interface NewDadsPageProps {
-  setCurrentPage: (page: Page) => void;
-}
+import { pageToPath } from '../App';
 
 const TipCard: React.FC<{ title: string; children: React.ReactNode; icon: React.ReactNode }> = ({ title, children, icon }) => (
     <div className="bg-white p-6 rounded-xl shadow-lg h-full">
@@ -18,7 +16,8 @@ const TipCard: React.FC<{ title: string; children: React.ReactNode; icon: React.
 );
 
 
-const NewDadsPage: React.FC<NewDadsPageProps> = ({ setCurrentPage }) => {
+const NewDadsPage: React.FC = () => {
+  const navigate = useNavigate();
   const [openFaq, setOpenFaq] = React.useState<number | null>(null);
 
   const toggleFaq = (index: number) => {
@@ -118,7 +117,7 @@ const NewDadsPage: React.FC<NewDadsPageProps> = ({ setCurrentPage }) => {
             {/* Back to Fatherhood button */}
             <div className="text-center">
                 <button
-                    onClick={() => setCurrentPage(Page.Fatherhood)}
+                    onClick={() => navigate(pageToPath(Page.Fatherhood))}
                     className="font-semibold text-dark-blue hover:text-primary-orange transition-colors duration-300"
                 >
                     &larr; Back to Fatherhood Main Page

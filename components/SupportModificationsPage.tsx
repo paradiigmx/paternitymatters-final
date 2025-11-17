@@ -1,9 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
-
-interface SupportModificationsPageProps {
-  setCurrentPage: (page: Page) => void;
-}
+import { pageToPath } from '../App';
 
 const StepCard: React.FC<{ number: string; title: string; children: React.ReactNode; }> = ({ number, title, children }) => (
     <div className="flex flex-col sm:flex-row items-start space-y-4 sm:space-y-0 sm:space-x-6">
@@ -17,7 +15,9 @@ const StepCard: React.FC<{ number: string; title: string; children: React.ReactN
     </div>
 );
 
-const SupportModificationsPage: React.FC<SupportModificationsPageProps> = ({ setCurrentPage }) => {
+const SupportModificationsPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-light-bg">
       {/* Hero Section */}
@@ -118,7 +118,7 @@ const SupportModificationsPage: React.FC<SupportModificationsPageProps> = ({ set
 
             <div className="mt-20 text-center">
                 <button
-                    onClick={() => setCurrentPage(Page.ChildSupport)}
+                    onClick={() => navigate(pageToPath(Page.ChildSupport))}
                     className="font-semibold text-dark-blue hover:text-primary-orange transition-colors duration-300"
                 >
                     &larr; Back to Child Support Overview

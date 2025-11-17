@@ -1,10 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
 import { ExternalLinkIcon } from './icons';
-
-interface CoParentingPageProps {
-  setCurrentPage: (page: Page) => void;
-}
+import { pageToPath } from '../App';
 
 const StrategyCard: React.FC<{ title: string; children: React.ReactNode; icon: React.ReactNode }> = ({ title, children, icon }) => (
     <div className="bg-white p-6 rounded-xl shadow-lg border-l-4 border-primary-blue h-full">
@@ -18,7 +16,9 @@ const StrategyCard: React.FC<{ title: string; children: React.ReactNode; icon: R
     </div>
 );
 
-const CoParentingPage: React.FC<CoParentingPageProps> = ({ setCurrentPage }) => {
+const CoParentingPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-light-bg">
       {/* Hero Section */}
@@ -73,7 +73,7 @@ const CoParentingPage: React.FC<CoParentingPageProps> = ({ setCurrentPage }) => 
 
             <div className="mt-20 text-center">
                 <button
-                    onClick={() => setCurrentPage(Page.Fatherhood)}
+                    onClick={() => navigate(pageToPath(Page.Fatherhood))}
                     className="font-semibold text-dark-blue hover:text-primary-orange transition-colors duration-300"
                 >
                     &larr; Back to Fatherhood Overview
