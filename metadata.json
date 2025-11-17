@@ -1,0 +1,7 @@
+{
+  "name": "PaternityMatters.org-site",
+  "description": "A professional and supportive website dedicated to helping fathers understand and fight for their parental rights, offering resources, legal information, and community support.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
