@@ -1,9 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
-
-interface AboutPageProps {
-  setCurrentPage: (page: Page) => void;
-}
+import { pageToPath } from '../App';
 
 const StatCard: React.FC<{ value: string; label: string }> = ({ value, label }) => (
     <div className="text-center">
@@ -22,7 +20,9 @@ const ValueCard: React.FC<{ title: string; children: React.ReactNode; icon: Reac
     </div>
 );
 
-const AboutPage: React.FC<AboutPageProps> = ({ setCurrentPage }) => {
+const AboutPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white">
        {/* Hero Section */}
@@ -123,10 +123,10 @@ const AboutPage: React.FC<AboutPageProps> = ({ setCurrentPage }) => {
               You have the power to shape your future and your child's. Explore our resources, read our blog for insights, or reach out to us for guidance. You are not alone.
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
-               <button onClick={() => setCurrentPage(Page.Resources)} className="bg-primary-orange text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_theme(colors.primary-orange/50%)]">
+               <button onClick={() => navigate(pageToPath(Page.Resources))} className="bg-primary-orange text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_theme(colors.primary-orange/50%)]">
                     Explore Resources
                 </button>
-                 <button onClick={() => setCurrentPage(Page.Blog)} className="bg-white text-dark-blue font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_white/30%]">
+                 <button onClick={() => navigate(pageToPath(Page.Blog))} className="bg-white text-dark-blue font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_white/30%]">
                     Read the Blog
                 </button>
             </div>

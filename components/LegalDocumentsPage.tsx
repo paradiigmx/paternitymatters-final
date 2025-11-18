@@ -1,9 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
-
-interface LegalDocumentsPageProps {
-  setCurrentPage: (page: Page) => void;
-}
+import { pageToPath } from '../App';
 
 const DocItem: React.FC<{ title: string; children: React.ReactNode; icon: React.ReactNode }> = ({ title, children, icon }) => (
     <div className="bg-white p-6 rounded-xl shadow-md border-l-4 border-primary-blue">
@@ -17,7 +15,9 @@ const DocItem: React.FC<{ title: string; children: React.ReactNode; icon: React.
     </div>
 );
 
-const LegalDocumentsPage: React.FC<LegalDocumentsPageProps> = ({ setCurrentPage }) => {
+const LegalDocumentsPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-light-bg">
       {/* Hero Section */}
@@ -86,7 +86,7 @@ const LegalDocumentsPage: React.FC<LegalDocumentsPageProps> = ({ setCurrentPage 
             
             <div className="mt-20 text-center">
                 <button
-                    onClick={() => setCurrentPage(Page.Paternity)}
+                    onClick={() => navigate(pageToPath(Page.Paternity))}
                     className="font-semibold text-dark-blue hover:text-primary-orange transition-colors duration-300"
                 >
                     &larr; Back to Paternity Overview

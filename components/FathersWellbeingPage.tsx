@@ -1,9 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
-
-interface FathersWellbeingPageProps {
-  setCurrentPage: (page: Page) => void;
-}
+import { pageToPath } from '../App';
 
 const WellbeingPillar: React.FC<{ title: string; children: React.ReactNode; icon: React.ReactNode }> = ({ title, children, icon }) => (
     <div className="bg-white p-6 rounded-xl shadow-lg h-full">
@@ -15,7 +13,9 @@ const WellbeingPillar: React.FC<{ title: string; children: React.ReactNode; icon
     </div>
 );
 
-const FathersWellbeingPage: React.FC<FathersWellbeingPageProps> = ({ setCurrentPage }) => {
+const FathersWellbeingPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-white">
       {/* Hero Section */}
@@ -68,7 +68,7 @@ const FathersWellbeingPage: React.FC<FathersWellbeingPageProps> = ({ setCurrentP
 
             <div className="mt-20 text-center">
                 <button
-                    onClick={() => setCurrentPage(Page.Fatherhood)}
+                    onClick={() => navigate(pageToPath(Page.Fatherhood))}
                     className="font-semibold text-dark-blue hover:text-primary-orange transition-colors duration-300"
                 >
                     &larr; Back to Fatherhood Overview

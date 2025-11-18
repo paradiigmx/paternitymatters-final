@@ -1,10 +1,8 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
 import { ChevronRightIcon, ExternalLinkIcon } from './icons';
-
-interface FatherhoodPageProps {
-  setCurrentPage: (page: Page) => void;
-}
+import { pageToPath } from '../App';
 
 const AgeStageCard: React.FC<{ title: string, subtitle: string, children: React.ReactNode }> = ({ title, subtitle, children }) => (
   <div className="bg-white p-6 rounded-xl shadow-lg h-full flex flex-col">
@@ -47,7 +45,9 @@ const SubPageCard: React.FC<{ title: Page, description: string, onClick: () => v
 );
 
 
-const FatherhoodPage: React.FC<FatherhoodPageProps> = ({ setCurrentPage }) => {
+const FatherhoodPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className="bg-light-bg">
       {/* Hero Section */}
@@ -91,19 +91,19 @@ const FatherhoodPage: React.FC<FatherhoodPageProps> = ({ setCurrentPage }) => {
                   <SubPageCard 
                     title={Page.NewDads} 
                     description="Expecting or have a newborn? Get our survival guide for the first year, from bonding tips to supporting your partner."
-                    onClick={() => setCurrentPage(Page.NewDads)}
+                    onClick={() => navigate(pageToPath(Page.NewDads))}
                     icon={<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>}
                   />
                   <SubPageCard 
                     title={Page.CoParenting} 
                     description="Learn strategies for effective communication, boundary-setting, and conflict resolution with your child's other parent."
-                    onClick={() => setCurrentPage(Page.CoParenting)}
+                    onClick={() => navigate(pageToPath(Page.CoParenting))}
                     icon={<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>}
                   />
                   <SubPageCard 
                     title={Page.FathersWellbeing} 
                     description="Your health matters. Find resources for managing stress, building a support system, and prioritizing your mental well-being."
-                    onClick={() => setCurrentPage(Page.FathersWellbeing)}
+                    onClick={() => navigate(pageToPath(Page.FathersWellbeing))}
                     icon={<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>}
                   />
               </div>
@@ -192,7 +192,7 @@ const FatherhoodPage: React.FC<FatherhoodPageProps> = ({ setCurrentPage }) => {
               <div className="max-w-4xl mx-auto text-center">
                   <h2 className="text-3xl font-bold text-dark-blue font-serif">Explore Related Articles</h2>
                   <p className="text-gray-600 my-4">Our blog features stories and advice on co-parenting, well-being, and strengthening your father-child bond.</p>
-                  <button onClick={() => setCurrentPage(Page.Blog)} className="text-primary-blue font-semibold hover:text-primary-orange group flex items-center mx-auto">
+                  <button onClick={() => navigate(pageToPath(Page.Blog))} className="text-primary-blue font-semibold hover:text-primary-orange group flex items-center mx-auto">
                     <span>Go to the Blog</span>
                     <ChevronRightIcon className="w-5 h-5 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
                   </button>

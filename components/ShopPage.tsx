@@ -1,9 +1,7 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
-
-interface ShopPageProps {
-  setCurrentPage: (page: Page) => void;
-}
+import { pageToPath } from '../App';
 
 interface Product {
   id: string;
@@ -75,7 +73,8 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
   );
 };
 
-const ShopPage: React.FC<ShopPageProps> = ({ setCurrentPage }) => {
+const ShopPage: React.FC = () => {
+  const navigate = useNavigate();
   const categories = ['All', ...Array.from(new Set(products.map(p => p.category)))];
   const [selectedCategory, setSelectedCategory] = React.useState('All');
 
@@ -189,13 +188,13 @@ const ShopPage: React.FC<ShopPageProps> = ({ setCurrentPage }) => {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <button
-              onClick={() => setCurrentPage(Page.Resources)}
+              onClick={() => navigate(pageToPath(Page.Resources))}
               className="bg-primary-orange text-white font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_theme(colors.primary-orange/50%)]"
             >
               Explore Resources
             </button>
             <button
-              onClick={() => setCurrentPage(Page.Blog)}
+              onClick={() => navigate(pageToPath(Page.Blog))}
               className="bg-white text-dark-blue font-bold py-3 px-8 rounded-full transition-all duration-300 transform hover:scale-105 hover:shadow-[0_0_20px_white/30%]"
             >
               Read the Blog
