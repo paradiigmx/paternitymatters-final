@@ -1,13 +1,11 @@
 import React, { useState, useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
 import { ExternalLinkIcon, PlusIcon, MinusIcon } from './icons/index';
 import { GoogleGenAI, Type } from "@google/genai";
 import { usStates } from '../data/states';
 import AffiliateProductCTA from './AffiliateProductCTA';
-
-interface ChildSupportPageProps {
-  setCurrentPage: (page: Page) => void;
-}
+import { pageToPath } from '../App';
 
 const ResourceLink: React.FC<{ href: string; title: string; description: string; }> = ({ href, title, description }) => (
     <a 
@@ -42,7 +40,8 @@ const SubPageCard: React.FC<{ title: Page, description: string, onClick: () => v
 );
 
 
-const ChildSupportPage: React.FC<ChildSupportPageProps> = ({ setCurrentPage }) => {
+const ChildSupportPage: React.FC = () => {
+  const navigate = useNavigate();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   // State for Child Support Calculator
@@ -332,13 +331,13 @@ const ChildSupportPage: React.FC<ChildSupportPageProps> = ({ setCurrentPage }) =
                   <SubPageCard 
                     title={Page.EnforcingSupport} 
                     description="A court order is not a suggestion. Learn about the powerful tools states use to collect unpaid child support."
-                    onClick={() => setCurrentPage(Page.EnforcingSupport)}
+                    onClick={() => navigate(pageToPath(Page.EnforcingSupport))}
                     icon={<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>}
                   />
                   <SubPageCard 
                     title={Page.SupportModifications} 
                     description="Life changes. Find out about the 'material and substantial change' required to modify your support payments."
-                    onClick={() => setCurrentPage(Page.SupportModifications)}
+                    onClick={() => navigate(pageToPath(Page.SupportModifications))}
                     icon={<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>}
                   />
               </div>

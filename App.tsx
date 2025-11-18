@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import { Page } from './types';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -24,112 +25,66 @@ import EnforcingSupportPage from './components/EnforcingSupportPage';
 import SupportModificationsPage from './components/SupportModificationsPage';
 import ShopPage from './components/ShopPage';
 
+export const pageToPath = (page: Page): string => {
+  if (page === Page.Home) return '/';
+  return `/${page.toLowerCase().replace(/\s+/g, '-')}`;
+};
 
-const App: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState<Page>(Page.Home);
-  const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const postId = urlParams.get('post');
-    if (postId) {
-      const postExists = blogPosts.some(p => p.id === postId);
-      if (postExists) {
-        setSelectedPostId(postId);
-        setCurrentPage(Page.Blog);
-      }
-    }
-  }, []);
+const ScrollToTop: React.FC = () => {
+  const { pathname } = useLocation();
 
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [currentPage, selectedPostId]);
-  
-  const handleSetCurrentPage = (page: Page) => {
-    setCurrentPage(page);
-    setSelectedPostId(null); // Clear selected post when changing main pages
-    // Clear query params when navigating away from a shared link
-    if (window.location.search) {
-      window.history.pushState({}, '', window.location.pathname);
-    }
-  };
+  }, [pathname]);
 
-  const viewPost = (postId: string) => {
-    setSelectedPostId(postId);
-    setCurrentPage(Page.Blog);
-    window.history.pushState({}, '', `?post=${postId}`);
-  };
-  
-  const viewBlogList = () => {
-    setSelectedPostId(null);
-    setCurrentPage(Page.Blog);
-     if (window.location.search) {
-      window.history.pushState({}, '', window.location.pathname);
-    }
-  };
+  return null;
+};
 
-  const renderPage = () => {
-    if (currentPage === Page.Blog) {
-      if (selectedPostId) {
-        const post = blogPosts.find(p => p.id === selectedPostId);
-        if (post) {
-          return <BlogPostPage post={post} onBack={viewBlogList} viewPost={viewPost} />;
-        }
-      }
-      return <BlogPage viewPost={viewPost} />;
-    }
-
-    switch (currentPage) {
-      case Page.Home:
-        return <HomePage setCurrentPage={handleSetCurrentPage} viewPost={viewPost} />;
-      case Page.About:
-        return <AboutPage setCurrentPage={handleSetCurrentPage} />;
-      case Page.Paternity:
-        return <PaternityPage setCurrentPage={handleSetCurrentPage} viewPost={viewPost} />;
-      case Page.Custody:
-        return <CustodyPage setCurrentPage={handleSetCurrentPage} viewPost={viewPost} />;
-      case Page.ChildSupport:
-        return <ChildSupportPage setCurrentPage={handleSetCurrentPage} />;
-      case Page.Fatherhood:
-        return <FatherhoodPage setCurrentPage={handleSetCurrentPage} />;
-      case Page.NewDads:
-        return <NewDadsPage setCurrentPage={handleSetCurrentPage} />;
-      case Page.PaternityTesting:
-        return <PaternityTestingPage setCurrentPage={handleSetCurrentPage} viewPost={viewPost}/>;
-      case Page.PaternityFraud:
-        return <PaternityFraudPage setCurrentPage={handleSetCurrentPage} viewPost={viewPost} />;
-      case Page.LegalDocuments:
-        return <LegalDocumentsPage setCurrentPage={handleSetCurrentPage} />;
-      case Page.DisclaimerPage:
-        return <DisclaimerPage />;
-      case Page.Resources:
-        return <ResourcesPage />;
-      case Page.Contact:
-        return <ContactPage />;
-      case Page.Shop:
-        return <ShopPage setCurrentPage={handleSetCurrentPage} />;
-      case Page.CoParenting:
-        return <CoParentingPage setCurrentPage={handleSetCurrentPage} />;
-      case Page.FathersWellbeing:
-        return <FathersWellbeingPage setCurrentPage={handleSetCurrentPage} />;
-      case Page.EnforcingSupport:
-        return <EnforcingSupportPage setCurrentPage={handleSetCurrentPage} />;
-      case Page.SupportModifications:
-        return <SupportModificationsPage setCurrentPage={handleSetCurrentPage} />;
-      default:
-        return <HomePage setCurrentPage={handleSetCurrentPage} viewPost={viewPost} />;
-    }
-  };
-
+const App: React.FC = () => {
   return (
-    <div className="flex flex-col min-h-screen font-sans bg-light-bg text-gray-800">
-      <Header currentPage={currentPage} setCurrentPage={handleSetCurrentPage} />
-      <main className="flex-grow">
-        {renderPage()}
-      </main>
-      <Footer setCurrentPage={handleSetCurrentPage} />
-    </div>
+    <BrowserRouter>
+      <ScrollToTop />
+      <div className="flex flex-col min-h-screen font-sans bg-light-bg text-gray-800">
+        <Header />
+        <main className="flex-grow">
+          <Routes>
+            <Route path={pageToPath(Page.Home)} element={<HomePage />} />
+            <Route path={pageToPath(Page.About)} element={<AboutPage />} />
+            <Route path={pageToPath(Page.Paternity)} element={<PaternityPage />} />
+            <Route path={pageToPath(Page.Custody)} element={<CustodyPage />} />
+            <Route path={pageToPath(Page.ChildSupport)} element={<ChildSupportPage />} />
+            <Route path={pageToPath(Page.Fatherhood)} element={<FatherhoodPage />} />
+            <Route path={pageToPath(Page.NewDads)} element={<NewDadsPage />} />
+            <Route path={pageToPath(Page.PaternityTesting)} element={<PaternityTestingPage />} />
+            <Route path={pageToPath(Page.PaternityFraud)} element={<PaternityFraudPage />} />
+            <Route path={pageToPath(Page.LegalDocuments)} element={<LegalDocumentsPage />} />
+            <Route path={pageToPath(Page.DisclaimerPage)} element={<DisclaimerPage />} />
+            <Route path={pageToPath(Page.Resources)} element={<ResourcesPage />} />
+            <Route path={pageToPath(Page.Contact)} element={<ContactPage />} />
+            <Route path={pageToPath(Page.Shop)} element={<ShopPage />} />
+            <Route path={pageToPath(Page.CoParenting)} element={<CoParentingPage />} />
+            <Route path={pageToPath(Page.FathersWellbeing)} element={<FathersWellbeingPage />} />
+            <Route path={pageToPath(Page.EnforcingSupport)} element={<EnforcingSupportPage />} />
+            <Route path={pageToPath(Page.SupportModifications)} element={<SupportModificationsPage />} />
+            <Route path="/blog" element={<BlogPage />} />
+            <Route path="/blog/:postId" element={<BlogPostWrapper />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </BrowserRouter>
   );
+};
+
+const BlogPostWrapper: React.FC = () => {
+  const { postId } = useParams<{ postId: string }>();
+  const post = blogPosts.find(p => p.id === postId);
+
+  if (!post) {
+    return <div>Post not found</div>;
+  }
+
+  return <BlogPostPage post={post} />;
 };
 
 export default App;

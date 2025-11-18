@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
 import { PlusIcon, MinusIcon } from './icons';
-
-interface PaternityTimelineProps {
-  viewPost: (postId: string) => void;
-  setCurrentPage: (page: Page) => void;
-}
+import { pageToPath } from '../App';
 
 interface TimelineLink {
     type: 'page' | 'post';
@@ -51,7 +48,8 @@ const timelineData: TimelineItem[] = [
     },
 ];
 
-const PaternityTimeline: React.FC<PaternityTimelineProps> = ({ viewPost, setCurrentPage }) => {
+const PaternityTimeline: React.FC = () => {
+  const navigate = useNavigate();
   const [expandedStage, setExpandedStage] = useState<number | null>(0);
 
   const handleToggle = (index: number) => {
@@ -60,9 +58,9 @@ const PaternityTimeline: React.FC<PaternityTimelineProps> = ({ viewPost, setCurr
 
   const handleLinkClick = (link: TimelineLink) => {
     if (link.type === 'page') {
-      setCurrentPage(link.destination as Page);
+      navigate(pageToPath(link.destination as Page));
     } else {
-      viewPost(link.destination as string);
+      navigate(`/blog/${link.destination}`);
     }
   };
 

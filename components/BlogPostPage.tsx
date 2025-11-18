@@ -1,15 +1,17 @@
 
 import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { BlogPost } from '../data/blogPosts';
 import ShareButton from './ShareButton';
+import { pageToPath } from '../App';
+import { Page } from '../types';
 
 interface BlogPostPageProps {
   post: BlogPost;
-  onBack: () => void;
-  viewPost: (postId: string) => void;
 }
 
-const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, onBack, viewPost }) => {
+const BlogPostPage: React.FC<BlogPostPageProps> = ({ post }) => {
+  const navigate = useNavigate();
 
   useEffect(() => {
     const articleContent = document.querySelector('.prose');
@@ -22,7 +24,7 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, onBack, viewPost }) =
             event.preventDefault();
             const postId = link.getAttribute('data-postid');
             if (postId) {
-                viewPost(postId);
+                navigate(`/blog/${postId}`);
             }
         }
     };
@@ -32,15 +34,15 @@ const BlogPostPage: React.FC<BlogPostPageProps> = ({ post, onBack, viewPost }) =
     return () => {
         articleContent.removeEventListener('click', handleArticleClick);
     };
-  }, [post.id, viewPost]);
+  }, [post.id, navigate]);
 
-  const postUrl = `${window.location.href.split('?')[0]}?post=${post.id}`;
+  const postUrl = `${window.location.origin}/blog/${post.id}`;
 
   return (
     <div className="bg-white py-12 md:py-20">
       <div className="container mx-auto px-6">
         <div className="max-w-6xl mx-auto">
-          <button onClick={onBack} className="mb-8 font-semibold text-dark-blue hover:text-primary-orange transition-colors duration-300">
+          <button onClick={() => navigate(pageToPath(Page.Blog))} className="mb-8 font-semibold text-dark-blue hover:text-primary-orange transition-colors duration-300">
             &larr; Back to All Articles
           </button>
           

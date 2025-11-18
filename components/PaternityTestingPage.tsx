@@ -1,12 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Page } from '../types';
 import { ChevronRightIcon } from './icons';
 import AffiliateProductCTA from './AffiliateProductCTA';
-
-interface PaternityTestingPageProps {
-  setCurrentPage: (page: Page) => void;
-  viewPost: (postId: string) => void;
-}
+import { pageToPath } from '../App';
 
 const TestTypeCard: React.FC<{ title: string; subtitle: string; children: React.ReactNode; isLegal: boolean }> = ({ title, subtitle, children, isLegal }) => (
     <div className={`rounded-xl shadow-lg p-8 border-t-8 ${isLegal ? 'border-primary-green' : 'border-primary-orange'} bg-white`}>
@@ -17,7 +14,13 @@ const TestTypeCard: React.FC<{ title: string; subtitle: string; children: React.
 );
 
 
-const PaternityTestingPage: React.FC<PaternityTestingPageProps> = ({ setCurrentPage, viewPost }) => {
+const PaternityTestingPage: React.FC = () => {
+  const navigate = useNavigate();
+
+  const viewPost = (postId: string) => {
+    navigate(`/blog/${postId}`);
+  };
+
   return (
     <div className="bg-light-bg">
       {/* Hero Section */}
@@ -127,7 +130,7 @@ const PaternityTestingPage: React.FC<PaternityTestingPageProps> = ({ setCurrentP
 
             <div className="mt-20 text-center">
                 <button
-                    onClick={() => setCurrentPage(Page.Paternity)}
+                    onClick={() => navigate(pageToPath(Page.Paternity))}
                     className="font-semibold text-dark-blue hover:text-primary-orange transition-colors duration-300"
                 >
                     &larr; Back to Paternity Overview
