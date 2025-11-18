@@ -83,6 +83,57 @@ const Header: React.FC = () => {
           <img src={LOGO_URL} alt="Paternity Matters Logo" className="h-10 w-auto" />
         </Link>
         <nav className="hidden md:flex items-center space-x-2">
+          {NAV_LINKS.map(link => (
+            link.sublinks ? (
+              <div key={link.name} className="relative">
+                <button
+                  onClick={() => handleDropdownToggle(link.name)}
+                  className="px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-md flex items-center text-white hover:bg-white/10"
+                >
+                  {link.name}
+                  <svg className={`w-4 h-4 ml-1 transition-transform duration-200 ${openDropdown === link.name ? 'transform rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                {openDropdown === link.name && (
+                  <div className="absolute top-full right-0 mt-2 w-56 bg-dark-blue rounded-md shadow-lg py-1 z-50 border border-gray-700 flex flex-col">
+                    <NavLink
+                      to={pageToPath(link.name)}
+                      onClick={closeMenu}
+                      className={({ isActive }) =>
+                        `w-full text-left px-4 py-2 text-sm ${isActive ? 'text-primary-orange' : 'text-white'} hover:bg-white/10`
+                      }
+                    >
+                      {link.name}
+                    </NavLink>
+                    {link.sublinks.map(sublink => (
+                      <NavLink
+                        key={sublink.name}
+                        to={pageToPath(sublink.name)}
+                        onClick={closeMenu}
+                        className={({ isActive }) =>
+                          `w-full text-left px-4 py-2 text-sm ${isActive ? 'text-primary-orange' : 'text-white'} hover:bg-white/10`
+                        }
+                      >
+                        {sublink.name}
+                      </NavLink>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ) : (
+              <NavLink
+                key={link.name}
+                to={pageToPath(link.name)}
+                onClick={closeMenu}
+                className={({ isActive }) =>
+                  `px-4 py-2 text-sm font-semibold transition-all duration-300 rounded-md ${
+                    isActive ? 'bg-primary-orange text-white' : 'text-white hover:bg-white/10'
+                  }`
+                }
+              >
+                {link.name}
+              </NavLink>
+            )
+          ))}
           {NAV_LINKS.map(link => <NavItem key={link.name} link={link} />)}
         </nav>
         <div className="md:hidden">
@@ -106,6 +157,16 @@ const Header: React.FC = () => {
                       <svg className={`w-4 h-4 transition-transform duration-200 ${openDropdown === link.name ? 'transform rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path></svg>
                     </button>
                     {openDropdown === link.name && (
+                      <div className="bg-black/20 mt-2 py-2 flex flex-col">
+                        <NavLink
+                          to={pageToPath(link.name)}
+                          onClick={closeMenu}
+                          className={({ isActive }) =>
+                            `w-full px-4 py-2 text-base ${isActive ? 'text-primary-orange' : 'text-white'}`
+                          }
+                        >
+                          {link.name}
+                        </NavLink>
                       <div className="bg-black/20 mt-2 py-2">
                         {link.sublinks.map(sublink => (
                           <NavLink
