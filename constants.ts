@@ -14,6 +14,7 @@ export const NAV_LINKS: NavLink[] = [
   {
     name: Page.Paternity,
     sublinks: [
+      { name: Page.Paternity },
       { name: Page.PaternityTesting },
       { name: Page.PaternityFraud },
       { name: Page.LegalDocuments },
@@ -23,6 +24,7 @@ export const NAV_LINKS: NavLink[] = [
   {
     name: Page.ChildSupport,
     sublinks: [
+        { name: Page.ChildSupport },
         { name: Page.EnforcingSupport },
         { name: Page.SupportModifications },
     ]
@@ -30,6 +32,7 @@ export const NAV_LINKS: NavLink[] = [
   {
     name: Page.Fatherhood,
     sublinks: [
+        { name: Page.Fatherhood },
         { name: Page.NewDads },
         { name: Page.CoParenting },
         { name: Page.FathersWellbeing },
