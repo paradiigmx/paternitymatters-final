@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { BrowserRouter, Routes, Route, useLocation, useParams } from 'react-router-dom';
 import { Page } from './types';
 import Header from './components/Header';
@@ -47,6 +48,7 @@ const App: React.FC = () => {
       <div className="flex flex-col min-h-screen font-sans bg-light-bg text-gray-800">
         <Header />
         <main className="flex-grow">
+          <Analytics />
           <Routes>
             <Route path={pageToPath(Page.Home)} element={<HomePage />} />
             <Route path={pageToPath(Page.About)} element={<AboutPage />} />
